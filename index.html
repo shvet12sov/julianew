@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Юлия Телегина | Психолог для предпринимателей</title>
     
-    <base href="/JULIA/">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -28,6 +26,14 @@
         }
         h1, h2, h3, .font-unbounded { font-family: 'Unbounded', sans-serif; }
         
+        /* Fixed AOS elements that don't reveal */
+        [data-aos] {
+          pointer-events: none;
+        }
+        .aos-animate {
+          pointer-events: auto;
+        }
+
         .btn-premium {
           background: #111111;
           color: white;
@@ -67,7 +73,7 @@
 </head>
 <body>
     <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>

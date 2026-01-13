@@ -19,7 +19,14 @@ export const ReviewCard = ({ name, role, text, image, videoUrl, onWatchVideo }: 
     
     <div className="mt-auto pt-8 border-t border-neutral-50 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <img src={image} alt={name} className="w-12 h-12 rounded-full grayscale object-cover" />
+        <div className="w-12 h-12 rounded-full overflow-hidden bg-neutral-100 shrink-0">
+          <img 
+            src={image} 
+            alt={name} 
+            className="w-full h-full grayscale object-cover" 
+            loading="lazy"
+          />
+        </div>
         <div>
           <div className="font-bold text-sm text-neutral-900">{name}</div>
           <div className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest">{role}</div>

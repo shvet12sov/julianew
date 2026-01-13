@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Navbar } from './widgets/navbar/ui/Navbar';
 import { Button } from './shared/ui/Button';
 import { Glow } from './shared/ui/Glow';
@@ -14,6 +14,42 @@ const App = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeTrackIndex, setActiveTrackIndex] = useState(0);
   const formRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    // Initialize AOS once the component is mounted
+    // Fix: Access AOS via type casting to avoid Window type errors
+    const aos = (window as any).AOS;
+    if (aos) {
+      aos.init({
+        duration: 800,
+        once: true,
+        offset: 100,
+        delay: 50,
+        easing: 'ease-out-cubic'
+      });
+    }
+
+    // Handle initial load and potential layout shifts
+    const timer = setTimeout(() => {
+      // Fix: Access AOS via type casting to avoid Window type errors
+      const aos = (window as any).AOS;
+      if (aos) aos.refresh();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Refresh AOS when dynamic content changes height
+  useEffect(() => {
+    // Fix: Access AOS via type casting to avoid Window type errors
+    const aos = (window as any).AOS;
+    if (aos) {
+      // Small delay to allow browser to calculate new height
+      setTimeout(() => {
+        aos.refresh();
+      }, 100);
+    }
+  }, [activeTrackIndex, openProblemIndex]);
 
   const toggleProblem = (index: number) => {
     setOpenProblemIndex(openProblemIndex === index ? null : index);
@@ -51,11 +87,11 @@ const App = () => {
         </div>
       )}
 
-      {/* Hero Section - Added pb-20 for mobile bottom spacing */}
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-28 md:pt-24 pb-20 md:pb-0 overflow-hidden">
         <Glow className="top-[-100px] right-[-100px]" />
         <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-          <div className="animate-in fade-in duration-1000 order-2 lg:order-1">
+          <div className="order-2 lg:order-1" data-aos="fade-right">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-6 md:mb-8 border border-indigo-100">
               Personal & Business Psychology
             </div>
@@ -74,9 +110,14 @@ const App = () => {
               </Button>
             </div>
           </div>
-          <div className="relative animate-in fade-in duration-1000 order-1 lg:order-2">
-            <div className="aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/30 bg-white p-1.5 md:p-2">
-              <img src={PROFILE_DATA.heroImage} alt="Юлия Телегина" className="w-full h-full object-cover rounded-[1.8rem] md:rounded-[2rem]" />
+          <div className="relative order-1 lg:order-2" data-aos="fade-left">
+            <div className="aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl shadow-indigo-100/30 bg-neutral-100 p-1.5 md:p-2">
+              <img 
+                src={PROFILE_DATA.heroImage} 
+                alt="Юлия Телегина" 
+                className="w-full h-full object-cover rounded-[1.8rem] md:rounded-[2rem] transition-opacity duration-1000"
+                loading="eager"
+              />
             </div>
           </div>
         </div>
@@ -85,13 +126,18 @@ const App = () => {
       {/* Trust Section */}
       <section id="about" className="py-20 md:py-32 bg-white relative z-10">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12 md:mb-20">
+          <div className="text-center mb-12 md:mb-20" data-aos="fade-up">
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-medium mb-6 font-unbounded text-neutral-900 px-4">Почему мне доверяют?</h2>
             <div className="h-1 w-16 md:w-20 bg-indigo-600 mx-auto"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {TRUST_FACTS.map((fact, i) => (
-              <div key={i} className="p-6 md:p-8 rounded-[2rem] border border-neutral-100 hover:border-indigo-100 transition-all group hover:bg-neutral-50/50">
+              <div 
+                key={i} 
+                data-aos="fade-up" 
+                data-aos-delay={i * 100}
+                className="p-6 md:p-8 rounded-[2rem] border border-neutral-100 hover:border-indigo-100 transition-all group hover:bg-neutral-50/50"
+              >
                 <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-neutral-50 flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-all text-indigo-600">
                   <i className={`fa-solid ${fact.icon} text-lg md:text-xl`}></i>
                 </div>
@@ -107,7 +153,7 @@ const App = () => {
       <section id="track" className="py-24 md:py-40 bg-[#111111] text-white relative z-10 overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-indigo-600/5 blur-[120px] rounded-full"></div>
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mb-16 md:mb-24">
+          <div className="max-w-4xl mb-16 md:mb-24" data-aos="fade-up">
             <h2 className="text-2xl md:text-5xl font-medium font-unbounded leading-tight mb-8">
               Путь от твердого бизнеса <br/> 
               <span className="text-indigo-400 italic">к психологии смыслов</span>
@@ -128,20 +174,22 @@ const App = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-            <div className="animate-in fade-in duration-700">
+            <div className="fade-in duration-700">
               <p className="text-[10px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-indigo-400 mb-6 block">
                 {CAREER_TRACK[activeTrackIndex].label}
               </p>
-              <p className="text-lg md:text-2xl font-light leading-relaxed text-neutral-300">
+              <p className="text-lg md:text-2xl font-light leading-relaxed text-neutral-300 min-h-[120px]">
                 {CAREER_TRACK[activeTrackIndex].event}
               </p>
             </div>
             <div className="relative group">
-              <div className="aspect-[16/10] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative z-10">
+              <div className="aspect-[16/10] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative z-10 bg-neutral-900">
                 <img 
+                  key={CAREER_TRACK[activeTrackIndex].image}
                   src={CAREER_TRACK[activeTrackIndex].image} 
                   alt="Experience" 
-                  className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-100"
+                  className="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-100 animate-in fade-in"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               </div>
@@ -154,14 +202,18 @@ const App = () => {
       {/* Problem Insights Section */}
       <section className="py-24 md:py-40 bg-white relative z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
+          <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24" data-aos="fade-up">
             <h2 className="text-2xl md:text-5xl font-medium font-unbounded text-neutral-900 mb-8 px-4">В чем ваш запрос?</h2>
             <p className="text-neutral-500 text-sm md:text-lg font-light">Выберите ситуацию, которая откликается вам сейчас — я покажу, что за ней стоит на самом деле.</p>
           </div>
           
           <div className="max-w-4xl mx-auto space-y-6">
             {PROBLEM_INSIGHTS.map((problem, i) => (
-              <div key={i} className={`group border-b border-neutral-100 transition-all duration-500 ${openProblemIndex === i ? 'pb-12' : 'pb-8'}`}>
+              <div 
+                key={i} 
+                data-aos="fade-up"
+                className={`group border-b border-neutral-100 transition-all duration-500 ${openProblemIndex === i ? 'pb-12' : 'pb-8'}`}
+              >
                 <button 
                   onClick={() => toggleProblem(i)}
                   className="w-full flex items-center justify-between text-left"
@@ -174,7 +226,7 @@ const App = () => {
                   </div>
                 </button>
                 
-                <div className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${openProblemIndex === i ? 'max-h-[600px] opacity-100 mt-10' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+                <div className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${openProblemIndex === i ? 'max-h-[800px] opacity-100 mt-10' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                   <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 items-start">
                     <div className="space-y-4">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 block">Психологический инсайт</span>
@@ -201,13 +253,18 @@ const App = () => {
       {/* Services Section */}
       <section id="services" className="py-24 md:py-40 bg-[#F9F8F6] relative z-10">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16 md:mb-24">
+          <div className="text-center mb-16 md:mb-24" data-aos="fade-up">
             <h2 className="text-2xl md:text-5xl font-medium font-unbounded text-neutral-900 mb-6">Форматы работы</h2>
             <p className="text-neutral-500 font-light max-w-xl mx-auto">Индивидуальные решения для тех, кто ценит глубину и твердый результат.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {SERVICES.map((s) => (
-              <div key={s.id} className="light-glass p-10 rounded-[3rem] flex flex-col group h-full">
+            {SERVICES.map((s, i) => (
+              <div 
+                key={s.id} 
+                data-aos="fade-up" 
+                data-aos-delay={i * 100}
+                className="light-glass p-10 rounded-[3rem] flex flex-col group h-full"
+              >
                 <div className="mb-8">
                   <h3 className="text-xl md:text-2xl font-bold mb-4 group-hover:text-indigo-600 transition-colors">{s.title}</h3>
                   <p className="text-neutral-500 text-sm font-light leading-relaxed">{s.description}</p>
@@ -234,7 +291,7 @@ const App = () => {
       {/* Reviews Grid Section */}
       <section className="py-24 md:py-40 bg-white relative z-10">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8" data-aos="fade-up">
             <div className="max-w-2xl">
               <h2 className="text-2xl md:text-5xl font-medium font-unbounded text-neutral-900 mb-6">Истории <br/>изменений</h2>
               <p className="text-neutral-500 font-light">Результаты, которые можно измерить не только в деньгах, но и в качестве жизни.</p>
@@ -247,11 +304,12 @@ const App = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {REVIEWS.map((review, i) => (
-              <ReviewCard 
-                key={i}
-                {...review}
-                onWatchVideo={review.videoUrl ? (url) => setActiveVideo(url) : undefined}
-              />
+              <div key={i} data-aos="fade-up" data-aos-delay={i * 100}>
+                <ReviewCard 
+                  {...review}
+                  onWatchVideo={review.videoUrl ? (url) => setActiveVideo(url) : undefined}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -260,7 +318,7 @@ const App = () => {
       {/* Contact Section */}
       <section id="contact" className="py-20 md:py-40 bg-[#F9F8F6] relative z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto bg-white rounded-[3rem] md:rounded-[4rem] overflow-hidden grid lg:grid-cols-[1fr_1.5fr] shadow-[0_48px_100px_-24px_rgba(0,0,0,0.1)] border border-neutral-50">
+          <div className="max-w-7xl mx-auto bg-white rounded-[3rem] md:rounded-[4rem] overflow-hidden grid lg:grid-cols-[1fr_1.5fr] shadow-[0_48px_100px_-24px_rgba(0,0,0,0.1)] border border-neutral-50" data-aos="zoom-in-up">
             <div className="p-10 md:p-14 lg:p-20 bg-[#111111] text-white flex flex-col justify-between relative overflow-hidden">
               <div className="absolute -top-32 -left-32 w-96 h-96 bg-indigo-500/10 blur-[120px] rounded-full"></div>
               <div className="relative z-10">

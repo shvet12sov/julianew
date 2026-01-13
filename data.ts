@@ -5,27 +5,27 @@ export const PROFILE_DATA = {
   tagline: "Масштаб бизнеса начинается с масштаба личности",
   instagram: "https://instagram.com/by_telegina",
   description: "Магистр психологии НИУ ВШЭ. Помогаю лидерам и предпринимателям расти через работу с мышлением. Я сама 7 лет строила бизнес, поэтому мы будем говорить на одном языке.",
-  heroImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop", 
+  heroImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1200&auto=format&fit=crop", 
 };
 
 export const GALLERY_PHOTOS = [
   {
-    url: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=1000&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=800&auto=format&fit=crop",
     caption: "Работа с лидерами",
     size: "large"
   },
   {
-    url: "https://images.unsplash.com/photo-1580894732230-2850122c4426?q=80&w=800&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1580894732230-2850122c4426?q=80&w=600&auto=format&fit=crop",
     caption: "Аналитический подход",
     size: "small"
   },
   {
-    url: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop",
     caption: "Личная эффективность",
     size: "small"
   },
   {
-    url: "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=1000&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=800&auto=format&fit=crop",
     caption: "Пространство изменений",
     size: "medium"
   }
@@ -59,25 +59,25 @@ export const CAREER_TRACK = [
     year: "2017", 
     label: "Старт бизнеса",
     event: "Открытие первой студии красоты. Период стройки, бетона и чертежей. Я сама контролировала каждый этап, учась управлять хаосом.",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop" 
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop" 
   },
   { 
     year: "2019", 
     label: "Масштабирование",
     event: "Studio by Telegina становится лидером рынка. 15 сотрудников и полностью выстроенная система, работающая автономно.",
-    image: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=1200&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?q=80&w=1000&auto=format&fit=crop"
   },
   { 
     year: "2022", 
     label: "Новый смысл",
     event: "Переезд в Москву и поступление в магистратуру НИУ ВШЭ. Глубокое погружение в психологию бизнеса и психоанализ.",
-    image: "https://images.unsplash.com/photo-1523050853023-8c2d29097df5?q=80&w=1200&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1523050853023-8c2d29097df5?q=80&w=1000&auto=format&fit=crop"
   },
   { 
     year: "Сегодня", 
     label: "Ваш результат",
     event: "Частная практика. Помогаю предпринимателям проходить их кризисы, опираясь на свой твердый опыт и академические знания.",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1000&auto=format&fit=crop"
   }
 ];
 
@@ -141,21 +141,21 @@ export const REVIEWS = [
     name: "Александр В.",
     role: "Основатель IT-компании",
     text: "Юлия понимает бизнес-процессы, поэтому консультации проходят без лишней воды. За 3 месяца доход вырос вдвое.",
-    image: "https://picsum.photos/seed/p1/100/100",
+    image: "https://picsum.photos/seed/p1/200/200",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
   {
     name: "Мария С.",
     role: "Владелица сети салонов",
     text: "Как бывший владелец салона, Юлия сразу подсветила мои ошибки в управлении через призму психологии. Это бесценно.",
-    image: "https://picsum.photos/seed/p2/100/100",
+    image: "https://picsum.photos/seed/p2/200/200",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
   },
   {
     name: "Дмитрий К.",
     role: "CEO Агентства",
     text: "Работа с Юлией помогла мне наконец-то делегировать операционку и заняться стратегией без чувства вины.",
-    image: "https://picsum.photos/seed/p3/100/100",
+    image: "https://picsum.photos/seed/p3/200/200",
     videoUrl: ""
   }
 ];
